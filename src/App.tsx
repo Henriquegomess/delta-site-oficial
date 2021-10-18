@@ -12,6 +12,34 @@ import { red } from "@mui/material/colors";
 import DonwloadIcon from "@mui/icons-material/Download";
 import Footer from "./Components/Footer";
 
+import { useForm, ValidationError } from "@formspree/react";
+
+function ContactForm() {
+  const [state, handleSubmit] = useForm("xvodyjob");
+  if (state.succeeded) {
+    return <p>Thanks for joining!</p>;
+  }
+  return (
+    <form action="https://formspree.io/f/xvodyjob" method="POST">
+      <label htmlFor="email">Email Address</label>
+      <input id="email" type="email" name="email" />
+      <ValidationError prefix="Email" field="email" errors={state.errors} />
+      <textarea id="message" name="message" />
+      <ValidationError
+        prefix="Message"
+        field="message"
+        errors={state.errors}
+      />{" "}
+      <label>
+        Your file:
+        <input type="file" name="upload" />
+      </label>
+      <button type="submit" disabled={state.submitting}>
+        Submit
+      </button>
+    </form>
+  );
+}
 const App: React.FC = (props) => {
   return (
     <>
@@ -45,7 +73,7 @@ const App: React.FC = (props) => {
               color: "#FFFFFF",
             }}
           >
-            Venha fazer parte do time Delta
+            O primeiro passo do seu sonho é aqui.
           </Typography>
           <Typography
             style={{ fontSize: "1.6rem", fontWeight: 400, color: "#FFFFFF" }}
@@ -199,6 +227,7 @@ const App: React.FC = (props) => {
                 Estamos focados em ajudar vocês a realizarem o sonho de vocês
               </Typography>
             </div>
+            {/* <ContactForm /> */}
           </div>
         </Grid>
       </Grid>
